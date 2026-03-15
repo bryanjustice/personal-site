@@ -59,11 +59,11 @@
     .card-aluminum {
       background: linear-gradient(
         135deg,
-        rgba(226,232,240,0.07) 0%,
-        rgba(203,213,225,0.04) 25%,
-        rgba(226,232,240,0.09) 50%,
-        rgba(203,213,225,0.05) 75%,
-        rgba(226,232,240,0.07) 100%
+        rgba(226,232,240,0.13) 0%,
+        rgba(203,213,225,0.08) 25%,
+        rgba(226,232,240,0.16) 50%,
+        rgba(203,213,225,0.10) 75%,
+        rgba(226,232,240,0.13) 100%
       );
       background-size: 4px 4px;
     }
@@ -86,8 +86,8 @@
     /* Animated grid background */
     .lab-grid {
       background-image:
-        linear-gradient(rgba(148,163,184,0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(148,163,184,0.07) 1px, transparent 1px);
+        linear-gradient(rgba(148,163,184,0.13) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,184,0.13) 1px, transparent 1px);
       background-size: 40px 40px;
     }
 
@@ -105,7 +105,7 @@
       position: absolute;
       width: 14px;
       height: 14px;
-      border-color: rgba(34,211,238,0.55);
+      border-color: rgba(34,211,238,0.80);
       border-style: solid;
     }
     .corner-tl::before {
@@ -120,7 +120,7 @@
     /* Subtle horizontal rule with glow */
     .rule-glow {
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(34,211,238,0.5), transparent);
+      background: linear-gradient(90deg, transparent, rgba(34,211,238,0.75), transparent);
     }
 
     /* Tag pill */
@@ -157,12 +157,12 @@
 
     /* Stat counter box */
     .stat-box {
-      border-left: 2px solid rgba(34,211,238,0.4);
+      border-left: 2px solid rgba(34,211,238,0.65);
     }
 
     /* Progress bar track */
     .track {
-      background: rgba(148,163,184,0.12);
+      background: rgba(148,163,184,0.22);
       border-radius: 1px;
     }
     .bar-fill {
@@ -224,7 +224,7 @@ const DOSSIER = [
     domain: 'SYS',
     domainColor: 'text-accent-cyan',
     status: 'COMPLETED',
-    statusColor: 'bg-aluminum-500/10 text-aluminum-400 border-aluminum-500/30',
+    statusColor: 'bg-aluminum-500/10 text-aluminum-300 border-aluminum-500/30',
     title: 'Google Labs AR Glasses — Sensor Architecture & Test Metrology',
     subtitle: 'Staff Technical Program Manager — Novel Sensor Systems',
     description: 'Led TPM and systems engineering for AR glasses development at Google Labs, focusing on novel sensor architecture and advanced test metrology. Developed standardized test systems transferred to Google\'s strategic partners, seeding the AR glasses ecosystem. Drove org-wide execution strategy for custom AR prototypes for the Pixel & Android ecosystem, connecting sensor architecture, product design, and software with machine and human perception research.',
@@ -246,7 +246,7 @@ const DOSSIER = [
     domain: 'SYS',
     domainColor: 'text-accent-cyan',
     status: 'COMPLETED',
-    statusColor: 'bg-aluminum-500/10 text-aluminum-400 border-aluminum-500/30',
+    statusColor: 'bg-aluminum-500/10 text-aluminum-300 border-aluminum-500/30',
     title: 'Magic Leap 2 Augmented Reality Headset',
     subtitle: 'Manager, Technical Program Management — XFN Product Launch',
     description: 'TPM leadership across product design, EE, and platform software for the Magic Leap 2 AR headset — recognized in Time Magazine\'s Best Inventions of 2022. Led calibration efforts for AR displays, eye tracking, and inertial sensors, deploying 12 custom metrology systems and software both internally and with manufacturing partners.',
@@ -268,7 +268,7 @@ const DOSSIER = [
     domain: 'QNT',
     domainColor: 'text-accent-violet',
     status: 'COMPLETED',
-    statusColor: 'bg-aluminum-500/10 text-aluminum-400 border-aluminum-500/30',
+    statusColor: 'bg-aluminum-500/10 text-aluminum-300 border-aluminum-500/30',
     title: 'Metamaterial R&D Platforms — DARPA & Federal Programs',
     subtitle: 'Staff Engineer, Metamaterials — Multiphysics, RF, Acoustic & ML Optimization',
     description: 'Design and realization of novel RF and acoustic measurement platforms using nanostructure composites. Developed a custom machine learning library implementing genetic algorithms into native multiphysics tools, achieving >100x speedup in complex design optimization. Subject matter expert in electromagnetic cloaking, IR absorption, and device firmware. Secured and executed over $10M in commercialization funding from DARPA, IC, U.S. Army, and AFRL.',
@@ -353,7 +353,7 @@ const PUBLICATIONS = [
 function SectionLabel({ children, className = '' }) {
   return (
     <div className={`flex items-center gap-3 mb-2 ${className}`}>
-      <span className="font-mono text-[10px] tracking-[0.2em] text-accent-cyan uppercase opacity-70">
+      <span className="font-mono text-[10px] tracking-[0.2em] text-accent-cyan uppercase opacity-90">
         {children}
       </span>
       <div className="flex-1 rule-glow" />
@@ -376,7 +376,7 @@ function MetricBar({ label, value, color }) {
   return (
     <div ref={ref} className="mb-2">
       <div className="flex justify-between items-center mb-1">
-        <span className="font-mono text-[10px] text-aluminum-400 tracking-wide">{label}</span>
+        <span className="font-mono text-[10px] text-aluminum-300 tracking-wide">{label}</span>
         <span className="font-mono text-[10px] text-aluminum-300">{value}%</span>
       </div>
       <div className="track h-[3px] w-full">
@@ -394,15 +394,15 @@ function DossierCard({ card }) {
 
   return (
     <div
-      className="dossier-card relative corner-tl corner-br rounded-sm border border-aluminum-200/10 card-aluminum overflow-hidden cursor-pointer"
+      className="dossier-card relative corner-tl corner-br rounded-sm border border-aluminum-200/25 card-aluminum overflow-hidden cursor-pointer"
       onClick={() => setExpanded(v => !v)}
     >
       {/* Top strip */}
-      <div className="flex items-center justify-between px-4 py-2 border-b border-aluminum-200/10 bg-slate-950/60">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-aluminum-200/25 bg-slate-950/60">
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[9px] text-aluminum-500 tracking-[0.2em]">{card.id}</span>
-          <span className="font-mono text-[8px] text-aluminum-600 tracking-widest">•</span>
-          <span className="font-mono text-[9px] text-aluminum-600 tracking-wider">{card.classification}</span>
+          <span className="font-mono text-[9px] text-aluminum-300 tracking-[0.2em]">{card.id}</span>
+          <span className="font-mono text-[8px] text-aluminum-300 tracking-widest">•</span>
+          <span className="font-mono text-[9px] text-aluminum-300 tracking-wider">{card.classification}</span>
         </div>
         <span className={`tag border ${card.statusColor} text-[9px]`}>{card.status}</span>
       </div>
@@ -412,21 +412,21 @@ function DossierCard({ card }) {
         <div className="flex items-start justify-between gap-3 mb-3">
           <div>
             <h3 className="font-sans font-600 text-aluminum-100 text-sm leading-snug mb-0.5">{card.title}</h3>
-            <p className="font-mono text-[10px] text-aluminum-500 tracking-wide">{card.subtitle}</p>
+            <p className="font-mono text-[10px] text-aluminum-300 tracking-wide">{card.subtitle}</p>
           </div>
           <span className={`tag border bg-transparent shrink-0 mt-0.5 ${card.domainColor} border-current/30`}>{card.domain}</span>
         </div>
 
-        <div className="rule-glow mb-3 opacity-40" />
+        <div className="rule-glow mb-3 opacity-65" />
 
         {/* Meta row */}
         <div className="grid grid-cols-2 gap-x-4 gap-y-1 mb-4">
           <div>
-            <span className="font-mono text-[9px] text-aluminum-600 uppercase tracking-widest block">Period</span>
+            <span className="font-mono text-[9px] text-aluminum-300 uppercase tracking-widest block">Period</span>
             <span className="font-mono text-[10px] text-aluminum-300">{card.period}</span>
           </div>
           <div>
-            <span className="font-mono text-[9px] text-aluminum-600 uppercase tracking-widest block">Organization</span>
+            <span className="font-mono text-[9px] text-aluminum-300 uppercase tracking-widest block">Organization</span>
             <span className="font-mono text-[10px] text-aluminum-300">{card.org}</span>
           </div>
         </div>
@@ -434,12 +434,12 @@ function DossierCard({ card }) {
         {/* Tags */}
         <div className="flex flex-wrap gap-1.5 mb-4">
           {card.tags.map(t => (
-            <span key={t} className="tag bg-aluminum-200/5 text-aluminum-500 border border-aluminum-200/10">{t}</span>
+            <span key={t} className="tag bg-aluminum-200/10 text-aluminum-300 border border-aluminum-200/25">{t}</span>
           ))}
         </div>
 
         {/* Description */}
-        <p className="text-aluminum-400 text-xs leading-relaxed mb-4">{card.description}</p>
+        <p className="text-aluminum-300 text-xs leading-relaxed mb-4">{card.description}</p>
 
         {/* Metrics */}
         <div className="mb-4">
@@ -466,12 +466,12 @@ function DossierCard({ card }) {
                 <SectionLabel>Patent Record</SectionLabel>
                 <div className="space-y-2">
                   {card.patents.map(p => (
-                    <div key={p.id} className="border border-aluminum-200/10 rounded-sm p-3 bg-slate-950/40">
+                    <div key={p.id} className="border border-aluminum-200/25 rounded-sm p-3 bg-slate-950/40">
                       <div className="flex items-start gap-2">
                         <span className="font-mono text-[9px] text-accent-amber shrink-0 mt-0.5">PAT</span>
                         <div>
                           <p className="font-mono text-[9px] text-accent-amber tracking-wide">{p.id}</p>
-                          <p className="text-[10px] text-aluminum-400 leading-relaxed mt-0.5">{p.title}</p>
+                          <p className="text-[10px] text-aluminum-300 leading-relaxed mt-0.5">{p.title}</p>
                         </div>
                       </div>
                     </div>
@@ -485,13 +485,13 @@ function DossierCard({ card }) {
                 <SectionLabel>Publication Citations</SectionLabel>
                 <div className="space-y-2">
                   {card.citations.map(c => (
-                    <div key={c.doi} className="border border-aluminum-200/8 rounded-sm p-3 bg-slate-950/40">
+                    <div key={c.doi} className="border border-aluminum-200/20 rounded-sm p-3 bg-slate-950/40">
                       <div className="flex items-start gap-2">
                         <span className="font-mono text-[9px] text-accent-violet shrink-0 mt-0.5">REF</span>
                         <div>
                           <p className="font-mono text-[10px] text-aluminum-300 font-medium">{c.ref}</p>
-                          <p className="font-mono text-[9px] text-aluminum-500">{c.journal}</p>
-                          <p className="font-mono text-[9px] text-aluminum-600 mt-0.5">{c.doi}</p>
+                          <p className="font-mono text-[9px] text-aluminum-300">{c.journal}</p>
+                          <p className="font-mono text-[9px] text-aluminum-300 mt-0.5">{c.doi}</p>
                         </div>
                       </div>
                     </div>
@@ -527,7 +527,7 @@ function App() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-slate-950/95 backdrop-blur-md border-b border-aluminum-200/8 shadow-lg shadow-black/40'
+            ? 'bg-slate-950/95 backdrop-blur-md border-b border-aluminum-200/20 shadow-lg shadow-black/40'
             : 'bg-transparent border-b border-transparent'
         }`}
       >
@@ -539,7 +539,7 @@ function App() {
             </div>
             <div>
               <span className="font-mono text-[11px] text-aluminum-200 tracking-[0.12em] font-medium">BRYAN JUSTICE</span>
-              <div className="font-mono text-[8px] text-aluminum-600 tracking-[0.15em]">SE-LEAD / 24-001</div>
+              <div className="font-mono text-[8px] text-aluminum-300 tracking-[0.15em]">SE-LEAD / 24-001</div>
             </div>
           </div>
 
@@ -554,7 +554,7 @@ function App() {
                   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
                 className={`nav-link font-mono text-[10px] tracking-widest uppercase transition-colors ${
-                  activeNav === item ? 'text-accent-cyan' : 'text-aluminum-500 hover:text-aluminum-200'
+                  activeNav === item ? 'text-accent-cyan' : 'text-aluminum-300 hover:text-aluminum-200'
                 }`}
               >
                 {item}
@@ -563,7 +563,7 @@ function App() {
           </nav>
 
           {/* Timestamp */}
-          <div className="hidden lg:block font-mono text-[9px] text-aluminum-700 tracking-wider">
+          <div className="hidden lg:block font-mono text-[9px] text-aluminum-300 tracking-wider">
             {timestamp}
           </div>
         </div>
@@ -573,16 +573,16 @@ function App() {
       <section id="overview" className="relative pt-32 pb-24 px-6 overflow-hidden scanlines">
 
         {/* Decorative corner markers */}
-        <div className="absolute top-20 left-6 w-16 h-16 border-t border-l border-accent-cyan/20" />
-        <div className="absolute top-20 right-6 w-16 h-16 border-t border-r border-accent-cyan/20" />
-        <div className="absolute bottom-8 left-6 w-16 h-16 border-b border-l border-accent-cyan/20" />
-        <div className="absolute bottom-8 right-6 w-16 h-16 border-b border-r border-accent-cyan/20" />
+        <div className="absolute top-20 left-6 w-16 h-16 border-t border-l border-accent-cyan/35" />
+        <div className="absolute top-20 right-6 w-16 h-16 border-t border-r border-accent-cyan/35" />
+        <div className="absolute bottom-8 left-6 w-16 h-16 border-b border-l border-accent-cyan/35" />
+        <div className="absolute bottom-8 right-6 w-16 h-16 border-b border-r border-accent-cyan/35" />
 
         <div className="max-w-7xl mx-auto">
           {/* Pre-header classification bar */}
           <div className="flex items-center gap-4 mb-10">
             <div className="pulse-bar h-px w-10 bg-accent-cyan/60" />
-            <span className="font-mono text-[9px] tracking-[0.3em] text-accent-cyan/70 uppercase">
+            <span className="font-mono text-[9px] tracking-[0.3em] text-accent-cyan/90 uppercase">
               Executive Profile — Document REF: BJU-2024-001
             </span>
             <div className="pulse-bar h-px flex-1 bg-accent-cyan/20" />
@@ -606,13 +606,13 @@ function App() {
               </h1>
               <div className="rule-glow w-64 mt-4 mb-6" />
 
-              <h2 className="font-sans text-xl text-aluminum-400 font-light mb-4 tracking-wide">
+              <h2 className="font-sans text-xl text-aluminum-300 font-light mb-4 tracking-wide">
                 Systems Engineering &amp; Product Leader
               </h2>
-              <p className="font-mono text-[11px] text-aluminum-600 tracking-widest mb-8">
+              <p className="font-mono text-[11px] text-aluminum-300 tracking-widest mb-8">
                 SYSTEMS · PRODUCT · ENGINEERING
               </p>
-              <p className="text-aluminum-400 text-sm leading-relaxed max-w-2xl">
+              <p className="text-aluminum-300 text-sm leading-relaxed max-w-2xl">
                 Experienced, hands-on researcher and product leader with strong strategic and execution skills
                 in complex, high-scale hardware and software systems for space platforms. Proven success in
                 systems-level architecture and deploying novel core technologies — from DARPA-funded metamaterial
@@ -630,7 +630,7 @@ function App() {
                   View Project Dossier
                 </button>
                 <button
-                  className="font-mono text-[10px] tracking-widest uppercase px-5 py-2.5 border border-aluminum-200/20 text-aluminum-400 hover:border-aluminum-200/40 hover:text-aluminum-200 transition-all rounded-sm"
+                  className="font-mono text-[10px] tracking-widest uppercase px-5 py-2.5 border border-aluminum-200/20 text-aluminum-300 hover:border-aluminum-200/40 hover:text-aluminum-200 transition-all rounded-sm"
                   onClick={() => document.getElementById('publications').scrollIntoView({ behavior: 'smooth' })}
                 >
                   Publications Index
@@ -640,18 +640,18 @@ function App() {
 
             {/* Stats panel */}
             <div className="lg:min-w-[280px]">
-              <div className="border border-aluminum-200/10 rounded-sm card-aluminum p-6">
+              <div className="border border-aluminum-200/25 rounded-sm card-aluminum p-6">
                 <SectionLabel>Key Metrics</SectionLabel>
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   {STATS.map(s => (
                     <div key={s.label} className="stat-box pl-3">
                       <div className="font-mono text-2xl font-bold text-aluminum-100 leading-none">{s.value}</div>
-                      <div className="font-mono text-[9px] text-aluminum-500 tracking-wide mt-1 leading-tight">{s.label}</div>
+                      <div className="font-mono text-[9px] text-aluminum-300 tracking-wide mt-1 leading-tight">{s.label}</div>
                     </div>
                   ))}
                 </div>
 
-                <div className="rule-glow my-5 opacity-30" />
+                <div className="rule-glow my-5 opacity-55" />
 
                 {/* Affiliations */}
                 <SectionLabel>Affiliations</SectionLabel>
@@ -666,8 +666,8 @@ function App() {
                     ['Facebook Building 8', 'Alumni'],
                   ].map(([org, rank]) => (
                     <li key={org} className="flex justify-between items-center">
-                      <span className="font-mono text-[10px] text-aluminum-400">{org}</span>
-                      <span className="tag bg-aluminum-200/5 text-aluminum-600 border border-aluminum-200/10">{rank}</span>
+                      <span className="font-mono text-[10px] text-aluminum-300">{org}</span>
+                      <span className="tag bg-aluminum-200/10 text-aluminum-300 border border-aluminum-200/25">{rank}</span>
                     </li>
                   ))}
                 </ul>
@@ -685,7 +685,7 @@ function App() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mt-4">
               <div>
                 <h2 className="font-sans text-3xl font-600 text-aluminum-100">Program Portfolio</h2>
-                <p className="font-mono text-[10px] text-aluminum-600 tracking-widest mt-1">
+                <p className="font-mono text-[10px] text-aluminum-300 tracking-widest mt-1">
                   SELECT RECORD TO EXPAND PATENT &amp; CITATION DATA
                 </p>
               </div>
@@ -708,13 +708,13 @@ function App() {
       </section>
 
       {/* ── Competencies ─────────────────────────────────── */}
-      <section id="competencies" className="py-20 px-6 border-t border-aluminum-200/8">
+      <section id="competencies" className="py-20 px-6 border-t border-aluminum-200/20">
         <div className="max-w-7xl mx-auto">
           <SectionLabel>Technical Competency Matrix</SectionLabel>
           <div className="flex flex-col md:flex-row gap-12 mt-6">
             <div className="flex-1">
               <h2 className="font-sans text-3xl font-600 text-aluminum-100 mb-2">Core Competencies</h2>
-              <p className="text-aluminum-500 text-sm mb-8 max-w-lg">
+              <p className="text-aluminum-300 text-sm mb-8 max-w-lg">
                 Proficiency ratings reflect depth of hands-on program leadership and engineering execution,
                 not solely academic familiarity. Validated against program deliverable records spanning
                 space, AR/XR, and metamaterials programs.
@@ -728,7 +728,7 @@ function App() {
 
             {/* Credentials panel */}
             <div className="md:w-72">
-              <div className="border border-aluminum-200/10 rounded-sm card-aluminum p-5 sticky top-20">
+              <div className="border border-aluminum-200/25 rounded-sm card-aluminum p-5 sticky top-20">
                 <SectionLabel>Credentials &amp; Education</SectionLabel>
                 <ul className="space-y-3 mt-4">
                   {[
@@ -737,24 +737,24 @@ function App() {
                     { code: 'B.S.', label: 'Electrical Engineering', sub: 'Duke University' },
                     { code: 'IEEE', label: 'Institute of Electrical and Electronics Engineers', sub: 'Member — APS, AWPL' },
                   ].map(c => (
-                    <li key={c.code} className="flex items-start gap-3 border-b border-aluminum-200/8 pb-3 last:border-0 last:pb-0">
+                    <li key={c.code} className="flex items-start gap-3 border-b border-aluminum-200/20 pb-3 last:border-0 last:pb-0">
                       <span className="font-mono text-[9px] text-accent-amber shrink-0 mt-0.5 bg-accent-amber/10 border border-accent-amber/20 px-1.5 py-0.5 rounded-sm">
                         {c.code}
                       </span>
                       <div>
                         <p className="font-sans text-[11px] text-aluminum-300 leading-tight">{c.label}</p>
-                        <p className="font-mono text-[9px] text-aluminum-600 mt-0.5">{c.sub}</p>
+                        <p className="font-mono text-[9px] text-aluminum-300 mt-0.5">{c.sub}</p>
                       </div>
                     </li>
                   ))}
                 </ul>
 
-                <div className="rule-glow my-4 opacity-30" />
+                <div className="rule-glow my-4 opacity-55" />
 
                 <SectionLabel>Technical Stack</SectionLabel>
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   {['Python', 'MATLAB', 'SQL', 'SysML', 'Multiphysics', 'RF Sim', 'Agile / SAFe'].map(t => (
-                    <span key={t} className="tag bg-aluminum-200/5 text-aluminum-500 border border-aluminum-200/10">{t}</span>
+                    <span key={t} className="tag bg-aluminum-200/10 text-aluminum-300 border border-aluminum-200/25">{t}</span>
                   ))}
                 </div>
               </div>
@@ -764,17 +764,17 @@ function App() {
       </section>
 
       {/* ── Publications Index ───────────────────────────── */}
-      <section id="publications" className="py-20 px-6 border-t border-aluminum-200/8">
+      <section id="publications" className="py-20 px-6 border-t border-aluminum-200/20">
         <div className="max-w-7xl mx-auto">
           <SectionLabel>Publications Index — Peer-Reviewed Works</SectionLabel>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mt-4 mb-10">
             <div>
               <h2 className="font-sans text-3xl font-600 text-aluminum-100">Research Publications</h2>
-              <p className="font-mono text-[10px] text-aluminum-600 tracking-widest mt-1">
+              <p className="font-mono text-[10px] text-aluminum-300 tracking-widest mt-1">
                 FULL INDEX — GOOGLE SCHOLAR: 5HHX5Z8AAAAJ
               </p>
             </div>
-            <span className="font-mono text-[9px] text-aluminum-600 tracking-widest">6 PUBLICATIONS SHOWN</span>
+            <span className="font-mono text-[9px] text-aluminum-300 tracking-widest">6 PUBLICATIONS SHOWN</span>
           </div>
 
           <div className="space-y-0">
@@ -782,25 +782,25 @@ function App() {
               <div
                 key={p.doi}
                 className={`grid grid-cols-[60px_1fr] gap-6 py-5 ${
-                  i < PUBLICATIONS.length - 1 ? 'border-b border-aluminum-200/8' : ''
+                  i < PUBLICATIONS.length - 1 ? 'border-b border-aluminum-200/20' : ''
                 } group hover:bg-aluminum-200/[0.02] transition-colors rounded-sm px-3 -mx-3`}
               >
                 <div className="text-right">
-                  <span className="font-mono text-xl font-bold text-aluminum-700 group-hover:text-aluminum-500 transition-colors">
+                  <span className="font-mono text-xl font-bold text-aluminum-300 group-hover:text-aluminum-300 transition-colors">
                     {p.year}
                   </span>
                 </div>
                 <div>
                   <p className="font-sans text-sm text-aluminum-200 leading-snug mb-1">{p.title}</p>
-                  <p className="font-mono text-[10px] text-aluminum-500">{p.ref} — <em className="not-italic text-aluminum-600">{p.venue}</em></p>
-                  <p className="font-mono text-[9px] text-aluminum-700 mt-0.5">{p.doi}</p>
+                  <p className="font-mono text-[10px] text-aluminum-300">{p.ref} — <em className="not-italic text-aluminum-300">{p.venue}</em></p>
+                  <p className="font-mono text-[9px] text-aluminum-300 mt-0.5">{p.doi}</p>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Google Scholar CTA */}
-          <div className="mt-10 border border-aluminum-200/10 rounded-sm card-aluminum p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="mt-10 border border-aluminum-200/25 rounded-sm card-aluminum p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <p className="font-mono text-[10px] text-accent-cyan tracking-widest mb-1">EXTERNAL PROFILE</p>
               <p className="font-sans text-sm text-aluminum-300">View complete publication index and citation metrics on Google Scholar.</p>
@@ -819,13 +819,13 @@ function App() {
       </section>
 
       {/* ── Contact ──────────────────────────────────────── */}
-      <section id="contact" className="py-20 px-6 border-t border-aluminum-200/8">
+      <section id="contact" className="py-20 px-6 border-t border-aluminum-200/20">
         <div className="max-w-7xl mx-auto">
           <SectionLabel>Contact &amp; Correspondence</SectionLabel>
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 mt-6">
             <div>
               <h2 className="font-sans text-3xl font-600 text-aluminum-100 mb-4">Engagement Enquiries</h2>
-              <p className="text-aluminum-400 text-sm leading-relaxed mb-6">
+              <p className="text-aluminum-300 text-sm leading-relaxed mb-6">
                 Available for technical consultation on space systems, RF/antenna programs, AR/XR sensor architecture,
                 and quantum technology roadmaps. Open to board advisory roles, keynote presentations, and research collaboration.
               </p>
@@ -836,12 +836,12 @@ function App() {
                   { label: 'Scholar',   value: 'scholar.google.com / 5HHX5z8AAAAJ', icon: '⬡' },
                   { label: 'LinkedIn',  value: 'linkedin.com/in/bryanjustice', icon: '↗' },
                 ].map(c => (
-                  <div key={c.label} className="flex items-center gap-4 border-b border-aluminum-200/8 pb-4 last:border-0">
+                  <div key={c.label} className="flex items-center gap-4 border-b border-aluminum-200/20 pb-4 last:border-0">
                     <span className="w-7 h-7 rounded-sm border border-accent-cyan/30 flex items-center justify-center text-accent-cyan text-xs shrink-0">
                       {c.icon}
                     </span>
                     <div>
-                      <p className="font-mono text-[9px] text-aluminum-600 tracking-widest">{c.label}</p>
+                      <p className="font-mono text-[9px] text-aluminum-300 tracking-widest">{c.label}</p>
                       <p className="font-mono text-[11px] text-aluminum-300">{c.value}</p>
                     </div>
                   </div>
@@ -850,7 +850,7 @@ function App() {
             </div>
 
             {/* Contact form */}
-            <div className="border border-aluminum-200/10 rounded-sm card-aluminum p-6">
+            <div className="border border-aluminum-200/25 rounded-sm card-aluminum p-6">
               <SectionLabel>Secure Message Form</SectionLabel>
               <div className="space-y-4 mt-4">
                 {[
@@ -859,24 +859,24 @@ function App() {
                   { id: 'email', label: 'Email Address', type: 'email', placeholder: 'j.smith@org.com' },
                 ].map(f => (
                   <div key={f.id}>
-                    <label className="font-mono text-[9px] text-aluminum-600 tracking-widest uppercase block mb-1.5">
+                    <label className="font-mono text-[9px] text-aluminum-300 tracking-widest uppercase block mb-1.5">
                       {f.label}
                     </label>
                     <input
                       type={f.type}
                       placeholder={f.placeholder}
-                      className="w-full bg-slate-950/60 border border-aluminum-200/15 rounded-sm px-3 py-2 font-mono text-[11px] text-aluminum-300 placeholder-aluminum-700 focus:outline-none focus:border-accent-cyan/50 focus:ring-1 focus:ring-accent-cyan/20 transition-all"
+                      className="w-full bg-slate-950/60 border border-aluminum-200/30 rounded-sm px-3 py-2 font-mono text-[11px] text-aluminum-300 placeholder-aluminum-500 focus:outline-none focus:border-accent-cyan/50 focus:ring-1 focus:ring-accent-cyan/20 transition-all"
                     />
                   </div>
                 ))}
                 <div>
-                  <label className="font-mono text-[9px] text-aluminum-600 tracking-widest uppercase block mb-1.5">
+                  <label className="font-mono text-[9px] text-aluminum-300 tracking-widest uppercase block mb-1.5">
                     Message
                   </label>
                   <textarea
                     rows={4}
                     placeholder="Describe your enquiry, program scope, or collaboration interest..."
-                    className="w-full bg-slate-950/60 border border-aluminum-200/15 rounded-sm px-3 py-2 font-mono text-[11px] text-aluminum-300 placeholder-aluminum-700 focus:outline-none focus:border-accent-cyan/50 focus:ring-1 focus:ring-accent-cyan/20 transition-all resize-none"
+                    className="w-full bg-slate-950/60 border border-aluminum-200/30 rounded-sm px-3 py-2 font-mono text-[11px] text-aluminum-300 placeholder-aluminum-500 focus:outline-none focus:border-accent-cyan/50 focus:ring-1 focus:ring-accent-cyan/20 transition-all resize-none"
                   />
                 </div>
                 <button className="w-full font-mono text-[10px] tracking-widest uppercase py-3 border border-accent-cyan text-accent-cyan hover:bg-accent-cyan hover:text-slate-950 transition-all rounded-sm mt-2">
@@ -889,20 +889,20 @@ function App() {
       </section>
 
       {/* ── Footer ───────────────────────────────────────── */}
-      <footer className="border-t border-aluminum-200/8 py-8 px-6">
+      <footer className="border-t border-aluminum-200/20 py-8 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-5 h-5 border border-accent-cyan/40 rounded-sm flex items-center justify-center">
               <div className="w-2 h-2 bg-accent-cyan/60 rounded-sm" />
             </div>
-            <span className="font-mono text-[9px] text-aluminum-700 tracking-widest">
+            <span className="font-mono text-[9px] text-aluminum-300 tracking-widest">
               BRYAN JUSTICE — SE-LEAD PROFILE REF. BJU-2024-001
             </span>
           </div>
           <div className="flex items-center gap-6">
-            <span className="font-mono text-[9px] text-aluminum-800 tracking-widest">SYSTEMS · PRODUCT · ENGINEERING</span>
+            <span className="font-mono text-[9px] text-aluminum-300 tracking-widest">SYSTEMS · PRODUCT · ENGINEERING</span>
             <div className="pulse-bar h-3 w-px bg-aluminum-700" />
-            <span className="font-mono text-[9px] text-aluminum-800">© 2026 BRYAN JUSTICE. ALL RIGHTS RESERVED.</span>
+            <span className="font-mono text-[9px] text-aluminum-300">© 2026 BRYAN JUSTICE. ALL RIGHTS RESERVED.</span>
           </div>
         </div>
       </footer>
