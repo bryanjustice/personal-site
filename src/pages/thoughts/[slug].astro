@@ -1,0 +1,180 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('thoughts');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+const allPosts = (await getCollection('thoughts')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const currentIndex = allPosts.findIndex(p => p.slug === post.slug);
+const prevPost = allPosts[currentIndex + 1] ?? null;
+const nextPost = allPosts[currentIndex - 1] ?? null;
+---
+<BaseLayout title={`${post.data.title} — Bryan Justice`} description={post.data.description}>
+
+  <div class="min-h-screen bg-slate-950 lab-grid relative">
+
+    <!-- Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-md border-b border-aluminum-200/20 shadow-lg shadow-black/40">
+      <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+        <a href="/thoughts" class="flex items-center gap-3 group">
+          <div class="w-7 h-7 border border-accent-violet/60 rounded-sm flex items-center justify-center group-hover:border-accent-violet transition-colors">
+            <div class="w-3 h-3 bg-accent-violet/80 rounded-sm" />
+          </div>
+          <div>
+            <span class="font-mono text-[11px] text-aluminum-200 tracking-[0.12em] font-medium">FIELD NOTES</span>
+            <div class="font-mono text-[8px] text-aluminum-300 tracking-[0.15em]">← BACK TO INDEX</div>
+          </div>
+        </a>
+
+        <div class="flex items-center gap-3">
+          <div class="pulse-bar h-px w-6 bg-accent-violet/60"></div>
+          <span class="font-mono text-[10px] tracking-widest text-accent-violet uppercase">Entry</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Article Header -->
+    <section class="relative pt-32 pb-10 px-6 overflow-hidden scanlines">
+      <div class="absolute top-20 left-6 w-16 h-16 border-t border-l border-accent-violet/25"></div>
+      <div class="absolute top-20 right-6 w-16 h-16 border-t border-r border-accent-violet/25"></div>
+
+      <div class="max-w-3xl mx-auto">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="pulse-bar h-px w-10 bg-accent-violet/60"></div>
+          <span class="font-mono text-[9px] tracking-[0.3em] text-accent-violet/90 uppercase">
+            Field Notes — Entry
+          </span>
+          <div class="pulse-bar h-px flex-1 bg-accent-violet/20"></div>
+        </div>
+
+        <!-- Meta strip -->
+        <div class="flex flex-wrap items-center gap-3 mb-6">
+          <span class="tag border bg-accent-violet/10 text-accent-violet border-accent-violet/30">
+            {formatDate(post.data.date)}
+          </span>
+          {post.data.tags && post.data.tags.map((tag: string) => (
+            <span class="tag bg-aluminum-200/10 text-aluminum-300 border border-aluminum-200/25">{tag}</span>
+          ))}
+        </div>
+
+        <h1 class="font-sans font-700 text-4xl md:text-5xl text-aluminum-100 leading-tight tracking-tight mb-4">
+          {post.data.title}
+        </h1>
+
+        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(167,139,250,0.6),transparent);" class="w-full mt-2 mb-6"></div>
+
+        {post.data.description && (
+          <p class="text-aluminum-300 text-base leading-relaxed max-w-2xl">
+            {post.data.description}
+          </p>
+        )}
+      </div>
+    </section>
+
+    <!-- Article Body -->
+    <section class="px-6 pb-24">
+      <div class="max-w-3xl mx-auto">
+
+        <!-- Dossier frame -->
+        <div class="relative border border-aluminum-200/20 rounded-sm card-aluminum overflow-hidden">
+          <!-- Top strip -->
+          <div class="flex items-center justify-between px-5 py-2.5 border-b border-aluminum-200/20 bg-slate-950/60">
+            <div class="flex items-center gap-2">
+              <div class="w-1.5 h-1.5 rounded-full bg-accent-violet/70"></div>
+              <span class="font-mono text-[9px] text-aluminum-300 tracking-[0.2em] uppercase">Bryan Justice · Field Notes</span>
+            </div>
+            <span class="font-mono text-[9px] text-aluminum-300 tracking-wider">CLASSIFIED: OPEN</span>
+          </div>
+
+          <!-- Prose content -->
+          <div class="p-8 md:p-10">
+            <div class="prose-lab">
+              <Content />
+            </div>
+          </div>
+
+          <!-- Bottom strip -->
+          <div class="flex items-center justify-between px-5 py-2.5 border-t border-aluminum-200/20 bg-slate-950/60">
+            <span class="font-mono text-[9px] text-aluminum-300 tracking-wider">END OF ENTRY</span>
+            <div class="flex items-center gap-2">
+              <div class="pulse-bar h-px w-8 bg-accent-violet/40"></div>
+              <div class="w-1.5 h-1.5 rounded-full bg-accent-violet/50"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prev / Next navigation -->
+        {(prevPost || nextPost) && (
+          <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {prevPost ? (
+              <a
+                href={`/thoughts/${prevPost.slug}`}
+                class="dossier-card relative block border border-aluminum-200/20 rounded-sm card-aluminum p-4 group"
+              >
+                <div class="font-mono text-[9px] text-aluminum-300 tracking-widest mb-1.5 uppercase">← Older Entry</div>
+                <div class="font-sans text-sm text-aluminum-200 group-hover:text-white transition-colors leading-snug">
+                  {prevPost.data.title}
+                </div>
+              </a>
+            ) : <div />}
+
+            {nextPost ? (
+              <a
+                href={`/thoughts/${nextPost.slug}`}
+                class="dossier-card relative block border border-aluminum-200/20 rounded-sm card-aluminum p-4 group text-right"
+              >
+                <div class="font-mono text-[9px] text-aluminum-300 tracking-widest mb-1.5 uppercase">Newer Entry →</div>
+                <div class="font-sans text-sm text-aluminum-200 group-hover:text-white transition-colors leading-snug">
+                  {nextPost.data.title}
+                </div>
+              </a>
+            ) : <div />}
+          </div>
+        )}
+
+        <!-- Back link -->
+        <div class="mt-10 text-center">
+          <a
+            href="/thoughts"
+            class="inline-flex items-center gap-2 font-mono text-[10px] tracking-widest text-accent-violet hover:text-accent-teal transition-colors uppercase"
+          >
+            ← Return to Field Notes Index
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-aluminum-200/20 py-8 px-6">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-5 h-5 border border-accent-violet/40 rounded-sm flex items-center justify-center">
+            <div class="w-2 h-2 bg-accent-violet/60 rounded-sm"></div>
+          </div>
+          <span class="font-mono text-[9px] text-aluminum-300 tracking-widest">
+            FIELD NOTES — BRYAN JUSTICE
+          </span>
+        </div>
+        <a href="/" class="font-mono text-[9px] text-aluminum-300 hover:text-accent-cyan transition-colors tracking-widest">
+          ← RETURN TO PROFILE
+        </a>
+      </div>
+    </footer>
+
+  </div>
+</BaseLayout>

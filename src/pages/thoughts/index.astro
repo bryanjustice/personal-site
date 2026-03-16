@@ -1,0 +1,151 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('thoughts')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function postId(index: number) {
+  return `POST-${String(posts.length - index).padStart(3, '0')}`;
+}
+---
+<BaseLayout title="Thoughts — Bryan Justice" description="Field notes, observations, and occasional long-form writing on systems, technology, and engineering.">
+
+  <div class="min-h-screen bg-slate-950 lab-grid relative">
+
+    <!-- Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-md border-b border-aluminum-200/20 shadow-lg shadow-black/40">
+      <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-7 h-7 border border-accent-cyan/60 rounded-sm flex items-center justify-center group-hover:border-accent-cyan transition-colors">
+            <div class="w-3 h-3 bg-accent-cyan/80 rounded-sm" />
+          </div>
+          <div>
+            <span class="font-mono text-[11px] text-aluminum-200 tracking-[0.12em] font-medium">BRYAN JUSTICE</span>
+            <div class="font-mono text-[8px] text-aluminum-300 tracking-[0.15em]">← BACK TO PROFILE</div>
+          </div>
+        </a>
+
+        <div class="flex items-center gap-3">
+          <div class="pulse-bar h-px w-6 bg-accent-violet/60"></div>
+          <span class="font-mono text-[10px] tracking-widest text-accent-violet uppercase">Field Notes</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Header -->
+    <section class="relative pt-32 pb-16 px-6 overflow-hidden scanlines">
+      <div class="absolute top-20 left-6 w-16 h-16 border-t border-l border-accent-violet/25"></div>
+      <div class="absolute top-20 right-6 w-16 h-16 border-t border-r border-accent-violet/25"></div>
+
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center gap-4 mb-10">
+          <div class="pulse-bar h-px w-10 bg-accent-violet/60"></div>
+          <span class="font-mono text-[9px] tracking-[0.3em] text-accent-violet/90 uppercase">
+            Field Notes — Log Series BJU-FN
+          </span>
+          <div class="pulse-bar h-px flex-1 bg-accent-violet/20"></div>
+        </div>
+
+        <h1 class="font-sans font-700 text-5xl md:text-6xl text-aluminum-100 leading-none tracking-tight mb-4">
+          thoughts
+        </h1>
+        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(167,139,250,0.6),transparent);" class="w-64 mt-4 mb-6"></div>
+        <p class="text-aluminum-300 text-sm leading-relaxed max-w-xl">
+          Occasional writing on systems engineering, emerging technology, career observations, and whatever
+          else seems worth putting into words. No fixed cadence — posted when the thinking is ready.
+        </p>
+      </div>
+    </section>
+
+    <!-- Post listing -->
+    <section class="py-12 px-6 pb-24">
+      <div class="max-w-7xl mx-auto">
+
+        {posts.length === 0 && (
+          <div class="border border-aluminum-200/20 rounded-sm card-aluminum p-10 text-center">
+            <p class="font-mono text-[10px] text-aluminum-300 tracking-widest mb-2">NO ENTRIES LOGGED</p>
+            <p class="text-aluminum-300 text-sm">The first field note is coming soon.</p>
+          </div>
+        )}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {posts.map((post, i) => (
+            <a
+              href={`/thoughts/${post.slug}`}
+              class="dossier-card relative corner-tl corner-br block rounded-sm border border-aluminum-200/25 card-aluminum overflow-hidden group"
+              style="--corner-color: rgba(167,139,250,0.70);"
+            >
+              <!-- Top strip -->
+              <div class="flex items-center justify-between px-4 py-2 border-b border-aluminum-200/25 bg-slate-950/60">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[9px] text-aluminum-300 tracking-[0.2em]">{postId(i)}</span>
+                  <span class="font-mono text-[8px] text-aluminum-300">•</span>
+                  <span class="font-mono text-[9px] text-aluminum-300 tracking-wider">FIELD NOTES</span>
+                </div>
+                <span class="tag border bg-accent-violet/10 text-accent-violet border-accent-violet/30 text-[9px]">
+                  {formatDate(post.data.date)}
+                </span>
+              </div>
+
+              <!-- Body -->
+              <div class="p-5">
+                <h2 class="font-sans font-600 text-aluminum-100 text-base leading-snug mb-2 group-hover:text-white transition-colors">
+                  {post.data.title}
+                </h2>
+
+                <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(167,139,250,0.5),transparent);" class="mb-3 opacity-65"></div>
+
+                {post.data.description && (
+                  <p class="text-aluminum-300 text-xs leading-relaxed mb-4">{post.data.description}</p>
+                )}
+
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-1.5 mb-4">
+                    {post.data.tags.map((tag: string) => (
+                      <span class="tag bg-aluminum-200/10 text-aluminum-300 border border-aluminum-200/25">{tag}</span>
+                    ))}
+                  </div>
+                )}
+
+                <span class="font-mono text-[9px] text-accent-violet tracking-widest uppercase group-hover:text-accent-teal transition-colors">
+                  Read Entry →
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-aluminum-200/20 py-8 px-6">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-5 h-5 border border-accent-violet/40 rounded-sm flex items-center justify-center">
+            <div class="w-2 h-2 bg-accent-violet/60 rounded-sm"></div>
+          </div>
+          <span class="font-mono text-[9px] text-aluminum-300 tracking-widest">
+            FIELD NOTES — BRYAN JUSTICE
+          </span>
+        </div>
+        <a href="/" class="font-mono text-[9px] text-aluminum-300 hover:text-accent-cyan transition-colors tracking-widest">
+          ← RETURN TO PROFILE
+        </a>
+      </div>
+    </footer>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .corner-tl::before,
+  .corner-br::after {
+    border-color: rgba(167,139,250,0.70);
+  }
+</style>

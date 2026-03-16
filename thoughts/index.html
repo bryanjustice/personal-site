@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Field Notes — Bryan Justice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            slate: { 950: '#0f172a', 900: '#0f1f3d' },
+            aluminum: {
+              50:  '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0',
+              300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b',
+            },
+            accent: {
+              cyan: '#22d3ee', teal: '#2dd4bf',
+              amber: '#fbbf24', violet: '#a78bfa',
+            }
+          },
+          fontFamily: {
+            mono: ['"IBM Plex Mono"', 'monospace'],
+            sans: ['"IBM Plex Sans"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #0f172a; }
+
+    .card-aluminum {
+      background: linear-gradient(
+        135deg,
+        rgba(226,232,240,0.13) 0%,
+        rgba(203,213,225,0.08) 25%,
+        rgba(226,232,240,0.16) 50%,
+        rgba(203,213,225,0.10) 75%,
+        rgba(226,232,240,0.13) 100%
+      );
+    }
+
+    .scanlines::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+    }
+
+    .lab-grid {
+      background-image:
+        linear-gradient(rgba(148,163,184,0.13) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,184,0.13) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    @keyframes pulse-bar {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+    .pulse-bar { animation: pulse-bar 2.4s ease-in-out infinite; }
+
+    .corner-tl::before, .corner-br::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-color: rgba(167,139,250,0.70);
+      border-style: solid;
+    }
+    .corner-tl::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .corner-br::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+    .tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .dossier-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .dossier-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(167,139,250,0.08), 0 4px 16px rgba(0,0,0,0.4);
+    }
+
+    /* ── Prose styles for post pages ── */
+    .prose-lab {
+      color: #cbd5e1;
+      line-height: 1.8;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.9375rem;
+    }
+    .prose-lab h2 {
+      color: #e2e8f0; font-weight: 600; font-size: 1.3rem;
+      margin-top: 2em; margin-bottom: 0.6em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid rgba(34,211,238,0.2);
+    }
+    .prose-lab h3 { color: #22d3ee; font-weight: 600; font-size: 1.1rem; margin-top: 1.8em; margin-bottom: 0.5em; }
+    .prose-lab p  { margin-bottom: 1.2em; }
+    .prose-lab strong { color: #e2e8f0; font-weight: 600; }
+    .prose-lab em     { color: #a78bfa; font-style: italic; }
+    .prose-lab ul, .prose-lab ol { margin-bottom: 1.2em; padding-left: 1.4em; }
+    .prose-lab li { margin-bottom: 0.4em; }
+    .prose-lab ul li::marker { color: #22d3ee; }
+    .prose-lab blockquote {
+      border-left: 2px solid rgba(34,211,238,0.6);
+      padding: 0.5em 1.2em; margin: 1.4em 0;
+      background: rgba(34,211,238,0.04);
+      color: #94a3b8; font-style: italic;
+    }
+    .prose-lab hr {
+      border: none; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(34,211,238,0.5), transparent);
+      margin: 2em 0;
+    }
+    .prose-lab a { color: #22d3ee; text-decoration: underline; text-underline-offset: 3px; }
+    .prose-lab a:hover { color: #2dd4bf; }
+  </style>
+</head>
+<body class="font-sans text-aluminum-200 antialiased">
+
+  <div class="min-h-screen bg-slate-950 lab-grid relative">
+
+    <!-- Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-md border-b border-aluminum-200/20 shadow-lg shadow-black/40">
+      <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+        <a href="../index.html" class="flex items-center gap-3 group">
+          <div class="w-7 h-7 border border-accent-violet/60 rounded-sm flex items-center justify-center" style="transition:border-color 0.2s">
+            <div class="w-3 h-3 bg-accent-violet/80 rounded-sm"></div>
+          </div>
+          <div>
+            <span class="font-mono text-[11px] text-aluminum-200 tracking-[0.12em] font-medium">BRYAN JUSTICE</span>
+            <div class="font-mono text-[8px] text-aluminum-300 tracking-[0.15em]">← BACK TO PROFILE</div>
+          </div>
+        </a>
+        <div class="flex items-center gap-3">
+          <div class="pulse-bar h-px w-6 bg-accent-violet/60"></div>
+          <span class="font-mono text-[10px] tracking-widest text-accent-violet uppercase">Field Notes</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Header -->
+    <section class="relative pt-32 pb-16 px-6 overflow-hidden scanlines">
+      <div class="absolute top-20 left-6 w-16 h-16 border-t border-l border-accent-violet/25"></div>
+      <div class="absolute top-20 right-6 w-16 h-16 border-t border-r border-accent-violet/25"></div>
+
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center gap-4 mb-10">
+          <div class="pulse-bar h-px w-10 bg-accent-violet/60"></div>
+          <span class="font-mono text-[9px] tracking-[0.3em] text-accent-violet/90 uppercase">Field Notes — Log Series BJU-FN</span>
+          <div class="pulse-bar h-px flex-1 bg-accent-violet/20"></div>
+        </div>
+
+        <h1 class="font-sans font-bold text-5xl md:text-6xl text-aluminum-100 leading-none tracking-tight mb-4">
+          thoughts
+        </h1>
+        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(167,139,250,0.6),transparent);" class="w-64 mt-4 mb-6"></div>
+        <p class="text-aluminum-300 text-sm leading-relaxed max-w-xl">
+          Occasional writing on systems engineering, emerging technology, career observations, and whatever
+          else seems worth putting into words. No fixed cadence — posted when the thinking is ready.
+        </p>
+      </div>
+    </section>
+
+    <!-- Post listing -->
+    <section class="py-12 px-6 pb-24">
+      <div class="max-w-7xl mx-auto">
+
+        <!-- ─────────────────────────────────────────────────────────────
+             POSTS — add a new <a> block here for each post you write.
+             Copy the block below, update the href, title, date, description, and tags.
+             ───────────────────────────────────────────────────────────── -->
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+          <!-- POST-001 -->
+          <a
+            href="on-systems-thinking.html"
+            class="dossier-card relative corner-tl corner-br block rounded-sm border border-aluminum-200/25 card-aluminum overflow-hidden group"
+          >
+            <!-- Top strip -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-aluminum-200/25 bg-slate-950/60">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-[9px] text-aluminum-300 tracking-[0.2em]">POST-001</span>
+                <span class="font-mono text-[8px] text-aluminum-300">•</span>
+                <span class="font-mono text-[9px] text-aluminum-300 tracking-wider">FIELD NOTES</span>
+              </div>
+              <span class="tag border bg-accent-violet/10 text-accent-violet border-accent-violet/30">March 14, 2026</span>
+            </div>
+            <!-- Body -->
+            <div class="p-5">
+              <h2 class="font-sans font-semibold text-aluminum-100 text-base leading-snug mb-2" style="transition:color 0.2s">
+                On Systems Thinking: Why the Map Is Never the Territory
+              </h2>
+              <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(167,139,250,0.5),transparent);" class="mb-3 opacity-65"></div>
+              <p class="text-aluminum-300 text-xs leading-relaxed mb-4">
+                A few observations on how engineering teams conflate their models with reality — and what happens when the gap goes unexamined.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                <span class="tag bg-aluminum-200/10 text-aluminum-300 border border-aluminum-200/25">Systems Engineering</span>
+                <span class="tag bg-aluminum-200/10 text-aluminum-300 border border-aluminum-200/25">Engineering Culture</span>
+                <span class="tag bg-aluminum-200/10 text-aluminum-300 border border-aluminum-200/25">Leadership</span>
+              </div>
+              <span class="font-mono text-[9px] text-accent-violet tracking-widest uppercase" style="transition:color 0.2s">
+                Read Entry →
+              </span>
+            </div>
+          </a>
+
+          <!-- Add more posts above this line -->
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-aluminum-200/20 py-8 px-6">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-5 h-5 border border-accent-violet/40 rounded-sm flex items-center justify-center">
+            <div class="w-2 h-2 bg-accent-violet/60 rounded-sm"></div>
+          </div>
+          <span class="font-mono text-[9px] text-aluminum-300 tracking-widest">FIELD NOTES — BRYAN JUSTICE</span>
+        </div>
+        <a href="../index.html" class="font-mono text-[9px] text-aluminum-300 hover:text-accent-cyan transition-colors tracking-widest">
+          ← RETURN TO PROFILE
+        </a>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
