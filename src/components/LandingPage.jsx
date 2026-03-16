@@ -291,6 +291,36 @@ function DossierCard({ card }) {
 export default function App() {
   const [activeNav, setActiveNav] = useState('Overview');
   const [scrolled, setScrolled] = useState(false);
+
+  /* ── Contact form ─────────────────────────────────────────────── */
+  const [formData, setFormData] = useState({ name: '', org: '', email: '', message: '' });
+  const [formState, setFormState] = useState('idle'); // idle | sending | success | error
+  const [formError, setFormError] = useState('');
+
+  const handleFieldChange = (id, value) => setFormData(prev => ({ ...prev, [id]: value }));
+
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.message) {
+      setFormError('Please fill in Name, Email, and Message before transmitting.');
+      return;
+    }
+    setFormError('');
+    setFormState('sending');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
+      setFormState('success');
+      setFormData({ name: '', org: '', email: '', message: '' });
+    } catch (err) {
+      setFormState('error');
+      setFormError(err.message || 'Transmission failed. Please try again or email directly.');
+    }
+  };
   const now = new Date();
   const timestamp = now.toISOString().replace('T', ' ').split('.')[0] + ' UTC';
 
@@ -649,6 +679,8 @@ export default function App() {
                     <input
                       type={f.type}
                       placeholder={f.placeholder}
+                      value={formData[f.id]}
+                      onChange={e => handleFieldChange(f.id, e.target.value)}
                       className="w-full bg-slate-950/60 border border-aluminum-200/30 rounded-sm px-3 py-2 font-mono text-[11px] text-aluminum-300 placeholder-aluminum-500 focus:outline-none focus:border-accent-cyan/50 focus:ring-1 focus:ring-accent-cyan/20 transition-all"
                     />
                   </div>
@@ -660,11 +692,32 @@ export default function App() {
                   <textarea
                     rows={4}
                     placeholder="Describe your enquiry, program scope, or collaboration interest..."
+                    value={formData.message}
+                    onChange={e => handleFieldChange('message', e.target.value)}
                     className="w-full bg-slate-950/60 border border-aluminum-200/30 rounded-sm px-3 py-2 font-mono text-[11px] text-aluminum-300 placeholder-aluminum-500 focus:outline-none focus:border-accent-cyan/50 focus:ring-1 focus:ring-accent-cyan/20 transition-all resize-none"
                   />
                 </div>
-                <button className="w-full font-mono text-[10px] tracking-widest uppercase py-3 border border-accent-cyan text-accent-cyan hover:bg-accent-cyan hover:text-slate-950 transition-all rounded-sm mt-2">
-                  Transmit Enquiry
+
+                {/* Validation / error message */}
+                {formError && (
+                  <p className="font-mono text-[9px] text-red-400 tracking-wide">{formError}</p>
+                )}
+
+                {/* Success confirmation */}
+                {formState === 'success' && (
+                  <div className="border border-accent-cyan/30 bg-accent-cyan/5 rounded-sm px-4 py-3">
+                    <p className="font-mono text-[9px] text-accent-cyan tracking-widest uppercase">
+                      ✓ Transmission received — expect a reply at your address.
+                    </p>
+                  </div>
+                )}
+
+                <button
+                  onClick={handleSubmit}
+                  disabled={formState === 'sending'}
+                  className="w-full font-mono text-[10px] tracking-widest uppercase py-3 border border-accent-cyan text-accent-cyan hover:bg-accent-cyan hover:text-slate-950 transition-all rounded-sm mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {formState === 'sending' ? '— Transmitting —' : 'Transmit Enquiry'}
                 </button>
               </div>
             </div>
