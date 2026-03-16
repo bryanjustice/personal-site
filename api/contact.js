@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         // Must be a verified sender address in your Resend account.
-        from: 'bryan@bryanjustice.com',
+        from: 'enquiry@bryanjustice.com',
         to:   'bryan@bryanjustice.com',
         reply_to: email,
         subject: `Portfolio Enquiry — ${name}${org ? ' · ' + org : ''}`,
